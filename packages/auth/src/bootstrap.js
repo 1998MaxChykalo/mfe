@@ -8,6 +8,7 @@ export const mount = (
   el,
   {
     onNavigate,
+    onSignIn,
     initialPath,
     defaultHistory: history = createMemoryHistory({
       initialEntries: [initialPath],
@@ -17,7 +18,7 @@ export const mount = (
   if (onNavigate) {
     history.listen(onNavigate);
   }
-  ReactDOM.render(<App history={history} />, el);
+  ReactDOM.render(<App history={history} onSignIn={onSignIn} />, el);
 
   return {
     onParentNavigate: ({ pathname: nextPathname }) => {
@@ -30,7 +31,7 @@ export const mount = (
 };
 
 if (process.env.NODE_ENV === "development") {
-  const devRoot = document.querySelector("#_marketing-dev-root");
+  const devRoot = document.querySelector("#_auth-dev-root");
   if (devRoot) {
     mount(devRoot, { defaultHistory: createBrowserHistory() });
   }
